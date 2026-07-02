@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karumes Clocks - Customizable Desktop Clocks & Screensavers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;700&family=Quicksand:wght@300;400;700&family=Sniglet&family=Varela+Round&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Web Navigation Bar -->
+  <header class="web-navbar">
+    <div class="navbar-container">
+      <div class="brand-logo">
+        <img src="Karumes Logo.png" alt="Karumes Logo" class="logo-img" />
+      </div>
+      <div class="navbar-actions">
+        <button class="web-download-btn primary-btn" type="button">
+          <svg class="dl-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Download Karumes Clock
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Web Hero Section -->
+  <section class="web-hero">
+    <div class="hero-container">
+      <div class="hero-left">
+        <h1 class="hero-headline">Turn your PC into your own custom clock</h1>
+        <p class="hero-subtext">
+          Karumes lets you customize and display stunning clocks on your desktop.
+        </p>
+        
+        <!-- Clean Vertical CTA Stack without box container -->
+        <div class="hero-cta-wrapper">
+          <button class="web-download-btn primary-btn large-btn" type="button">
+            <svg class="dl-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download Karumes Clock
+          </button>
+          <div class="hero-version-label">
+            For <img src="windows.png" alt="Windows Logo" class="win-logo-inline" /> Windows 11
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-right">
+        <div class="desk-mockup-wrapper">
+          <div class="desk-setup">
+            <!-- Sleeker Virtual Widescreen PC Monitor with dynamic neon halo backglow -->
+            <div class="monitor-frame">
+              <div class="screen-bezel">
+                <div class="virtual-display">
+                  <canvas id="mockupCanvasPC"></canvas>
+                  <div class="display-overlay"></div>
+                </div>
+              </div>
+              <div class="monitor-stand"></div>
+              <div class="monitor-base"></div>
+            </div>
+            <!-- Flat Solid Desk Surface -->
+            <div class="wood-desk-surface"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Platform Shell (Faithful App Actions with 4-Column Grid) -->
+  <main id="platform" class="platform-shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 class="section-title">Screensaver Simulator</h2>
+        <p class="section-desc">Click any clock below to immediately preview and customize in fullscreen mode</p>
+      </div>
+      <div class="topbar-actions">
+        <button id="dashboard-settings-btn" type="button" aria-label="Customize selected clock">Settings</button>
+      </div>
+    </header>
+
+    <section id="library-section" class="section active">
+      <!-- 4-Column Grid placed immediately under Hero Header -->
+      <div id="clock-grid" class="clock-grid" aria-label="Clock previews"></div>
+
+      <!-- Website Integrated Structured Information Center -->
+      <section class="web-page-details">
+        <div class="web-content-container">
+
+          <!-- Column: Feedback Form ("Share Your Thoughts!") -->
+          <div class="web-feedback-card">
+            <h3 class="web-section-title">Share Your Thoughts!</h3>
+            <p class="web-section-text">Whether it's a feature request, a bug report, or just some love for the app, I'd love to hear from you! Your message goes straight to my inbox.</p>
+            <hr class="modal-divider"/>
+            <form id="feedback-form" class="feedback-form">
+              <div class="form-group">
+                <label for="feedback-subject">Subject</label>
+                <input type="text" id="feedback-subject" placeholder="Feature suggestion / Bug report" required />
+              </div> 
+              <div class="form-group">
+                <label for="feedback-message">Message</label>
+                <textarea id="feedback-message" rows="3" placeholder="Write your message here..." required></textarea>
+              </div>
+              <div class="form-actions">
+                <button id="submit-feedback-btn" class="submit-btn" type="submit">Send Message</button>
+              </div>
+              <div id="feedback-status" class="feedback-status"></div>
+            </form>
+          </div>
+
+          <!-- Column: Meet Katsu (Profile Section Card with Enlarged Avatar) -->
+          <div class="web-profile-card">
+            <div class="profile-image-container">
+              <img src="katsu_face.png" alt="Author Icon" class="profile-avatar"/>
+            </div>
+            <div class="profile-text-content">
+              <h3 class="web-section-title">Katsu</h3>
+              <span class="web-section-subtitle">UI Designer & Developer of Karumes Clock</span>
+              <p class="web-section-text">
+                Hi, I'm Katsu, the creator of Karumes Clock. As a solo developer, I designed and built this app from scratch to bring smooth, relaxing, and customizable clocks to your desktop.
+              </p>
+            </div>
+          </div>
+
+          <!-- Column: Donate Gateways (Support Section Card) -->
+          <div class="web-support-card">
+            <h3 class="web-section-title"><img src="donation.png" alt="Donation" class="donation-icon"/> Donate to Karumes Clock</h3>
+            <p class="web-section-text">
+              Karumes Clock is built by a solo developer, so your support really matters!<br/>
+              If you love Karumes Clock, feel free to support my work and buy me a coffee! ☕
+            </p>
+            
+            <div class="web-payment-info">
+              <p class="payment-intro">Choose your preferred donation method:</p>
+              <ul class="payment-notes">
+                <li><strong>PayPal:</strong> Supports PayPal, Apple Pay, and Credit Cards.</li>
+                <li><strong>Stripe:</strong> Supports Credit Cards (Visa, Mastercard, Amex, etc.) and Link.</li>
+              </ul>
+            </div>
+
+            <div class="support-options">
+              <button id="paypal-donate-btn" class="support-card-btn paypal" type="button" aria-label="Donate via PayPal">
+                <img src="paypal.png" alt="PayPal" style="height: 1.3rem;"/>
+              </button>
+              <button id="stripe-donate-btn" class="support-card-btn stripe" type="button" aria-label="Donate via Stripe">
+                <img src="stripe.png" alt="Stripe" style="height: 1.7rem;"/>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      
+      <footer class="web-footer-simple">
+        <p>© 2026 Karumes Clocks. All rights reserved.</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Fullscreen Emulator Saver Stage -->
+  <section id="saver" class="saver hidden" aria-label="Selected clock">
+    <canvas id="clockCanvas"></canvas>
+    <div class="saver-actions">
+      <button id="home-btn" type="button" aria-label="Back to Karumes">&times;</button>
+      <button id="settings-btn" type="button" aria-label="Customize clock">Settings</button>
+    </div>
+  </section>
+
+  <!-- Side Customization Controls Panel -->
+  <aside id="settings-panel" class="settings-panel hidden" aria-label="Clock settings">
+    <div class="settings-head">
+      <span id="settings-title">Clock</span>
+      <button id="close-settings" type="button" aria-label="Close settings">Close</button>
+    </div>
+
+    <div class="settings-grid">
+      <div class="settings-color" data-setting="bg" data-color-target="bg-custom-color">
+        <span>Background</span>
+        <div class="color-swatches" data-swatches="bg"></div>
+        <div class="custom-color-panel"><input id="bg-custom-color" type="color" /></div>
+      </div>
+      <div class="settings-color" data-setting="primary" data-color-target="font-custom-color">
+        <span>Main</span>
+        <div class="color-swatches" data-swatches="primary"></div>
+        <div class="custom-color-panel"><input id="font-custom-color" type="color" /></div>
+      </div>
+      <div class="settings-color" data-setting="colon" data-color-target="colon-custom-color">
+        <span>Accent</span>
+        <div class="color-swatches" data-swatches="colon"></div>
+        <div class="custom-color-panel"><input id="colon-custom-color" type="color" /></div>
+      </div>
+      <div class="settings-color" data-setting="card" data-color-target="card-custom-color">
+        <span>Surface</span>
+        <div class="color-swatches" data-swatches="card"></div>
+        <div class="custom-color-panel"><input id="card-custom-color" type="color" /></div>
+      </div>
+    </div>
+
+    <div class="settings-row" data-setting="font">
+      <span>Font</span>
+      <select id="font-family-select">
+        <option value="rounded">Font 1</option>
+        <option value="modern">Font 2</option>
+        <option value="mono">Font 3</option>
+        <option value="condensed">Font 4</option>
+        <option value="serif">Font 5</option>
+      </select>
+    </div>
+
+    <div class="settings-row" data-setting="size">
+      <span>Clock size</span>
+      <input id="clock-size-scale" type="range" min="0.55" max="4.5" step="0.01" value="0.55" />
+    </div>
+
+    <div class="settings-row" data-setting="fontSize">
+      <span>Text size</span>
+      <input id="text-size-scale" type="range" min="0.65" max="3.5" step="0.01" />
+    </div>
+
+    <div class="settings-row" data-setting="panelSize">
+      <span>Panel size</span>
+      <input id="panel-size-scale" type="range" min="0.65" max="1.6" step="0.01" />
+    </div>
+
+    <div class="settings-actions">
+      <button id="apply-btn" type="button">Launch</button>
+    </div>
+  </aside>
+
+  <!-- Dynamic Core Engine Modules -->
+  <script src="clocks/clock-definitions.js"></script>
+  <script src="clocks/clock1/binary.js"></script>
+  <script src="clocks/clock2/rolling.js"></script>
+  <script src="clocks/clock3/panel.js"></script>
+  <script src="clocks/clock4/digital.js"></script>
+  <script src="clocks/clock5/analog.js"></script>
+  <script src="clocks/clock6/flip.js"></script>
+  <script src="clocks/clock7/neon.js"></script>
+  <script src="clocks/clock8/grid.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
