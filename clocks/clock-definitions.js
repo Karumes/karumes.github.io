@@ -9,7 +9,7 @@
       defaultFont: "rounded",
       hasNumbers: true,
       controls: ["bg", "primary", "colon", "font", "size"],
-      defaultSizeScale: 2.9,
+      defaultSizeScale: 1.5,
       centerZoom: true,
     },
     {
@@ -96,6 +96,19 @@
       hasNumbers: true,
       controls: ["bg", "primary", "font", "size"],
       defaultSizeScale: 0.85,
+      centerZoom: true,
+    },
+    {
+      name: "Clock 9",
+      renderer: "renderClock9",
+      previewImage: "clock9.png",
+      size: 260,
+      defaultAccent: "#d8f7ff",
+      defaultFont: "condensed",
+      defaultDifficulty: "easy",
+      hasNumbers: true,
+      controls: ["bg", "primary", "font", "difficulty", "size"],
+      defaultSizeScale: 1.05,
       centerZoom: true,
     },
   ];
