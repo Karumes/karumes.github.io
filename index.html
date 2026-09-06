@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karumes — Ambient Timepieces for Desktop</title>
+  
+  <!-- アセット画像の先行ロード -->
+  <link rel="preload" href="frame.png" as="image" />
+  <link rel="preload" href="wheel.png" as="image" />
+
+  <link rel="preload" href="fonts/Quicksand-Bold.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/Segoe-UI-Bold.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/Poppins-Regular.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/Oswald-Regular.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/Scrapitup-EEK4.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/Kbsticktoit-vJ3M.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/GamjaFlower-Regular.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/CupcakePartyDemo-46xK.ttf" as="font" type="font/truetype" crossorigin />
+  <link rel="preload" href="fonts/OblataDisplayRegular-Zp8o8.otf" as="font" type="font/opentype" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <!-- 背景用の高品質ラジアルグロウ -->
+  <div class="mesh-background">
+    <div class="mesh-glow-1"></div>
+    <div class="mesh-glow-2"></div>
+  </div>
+
+  <main id="platform" class="platform-shell">
+    <header class="topbar">
+      <button id="brand-btn" class="brand-mark" type="button" aria-label="Karumes home">
+        <img src="Karumes Logo.png" alt="Logo" />
+      </button>
+      <div class="topbar-actions"></div>
+    </header>
+
+    <section id="library-section" class="section active">
+      
+      <!-- メイン紹介セクション (水色デフォルトアクセント) -->
+      <div class="web-hero animate-fade-in">
+        <span class="badge">Aesthetic Screensaver</span>
+        <h1>Make Your Screen Beautiful</h1>
+        <p class="hero-desc">
+          A customizable clock designed to fit your space, your mood, and your style. Choose the look you love, make it your own, and turn your everyday screen into something worth looking at.
+        </p>
+        <div class="web-downloads">
+          <a href="KarumesClock-Windows.zip" class="web-dl-btn win" download>
+            <img src="windows.png" alt="Windows" class="dl-icon-img" />
+            <span class="dl-text">
+              <small>Download for</small>
+              <strong>Windows</strong>
+            </span>
+          </a>
+          <!-- macOSボタンを囲むラッパーとComing Soon!用テキストの配置 -->
+          <div class="web-dl-wrapper">
+            <a class="web-dl-btn mac disabled" aria-disabled="true">
+              <img src="mac.png" alt="macOS" class="dl-icon-img" />
+              <span class="dl-text">
+                <small>Download for</small>
+                <strong>macOS</strong>
+              </span>
+            </a>
+            <span class="coming-soon-label">Coming soon!</span>
+          </div>
+        </div>
+        
+        <!-- 下部探索ボタンへの余白が拡張されたコンテナ -->
+        <div class="hero-explore">
+          <button id="view-clocks-btn" class="view-clocks-trigger" type="button">
+            Explore Clock Gallery <span class="arrow">↓</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 時計グリッド一覧 -->
+      <div id="clock-grid" class="clock-grid animate-fade-in-delayed" aria-label="Clock previews"></div>
+
+      <!-- セットアップ手順コンテナ -->
+      <section class="setup-guide-section animate-fade-in-delayed">
+        <div class="setup-tabs">
+          <button class="tab-btn active" data-tab="win-setup">Windows Guide</button>
+          <button class="tab-btn" data-tab="mac-setup">macOS Guide</button>
+        </div>
+
+        <div id="win-setup" class="tab-content active">
+          <div class="guide-box">
+            <h3>Quick Start Guide (Windows)</h3>
+            <div class="guide-steps">
+              <div class="g-step">
+                <span class="num">1</span>
+                <div>
+                  <strong>Run the Installer</strong>
+                  <p>Double-click "KarumesClock Setup 1.0.0.exe" to install the app. The clock dashboard will open automatically.</p>
+                </div>
+              </div>
+              <div class="g-step">
+                <span class="num">2</span>
+                <div>
+                  <strong>Customize Options</strong>
+                  <p>Click on your favorite clock, open "Settings" to change colors or sizes, and click "Apply" to save your customization.</p>
+                </div>
+              </div>
+              <div class="g-step">
+                <span class="num">3</span>
+                <div>
+                  <strong>Register as Screensaver</strong>
+                  <p>Right-click "register-screensaver.bat" and select "Run as administrator". Confirm system prompts and click "OK" in the Windows Screensaver Settings window.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="mac-setup" class="tab-content">
+          <div class="guide-box">
+            <h3>Quick Start Guide (macOS)</h3>
+            <div class="guide-steps">
+              <div class="g-step">
+                <span class="num">1</span>
+                <div>
+                  <strong>Extract Application</strong>
+                  <p>Unpack the zip folder and move the executable contents into your Applications directory.</p>
+                </div>
+              </div>
+              <div class="g-step">
+                <span class="num">2</span>
+                <div>
+                  <strong>Initialize Scripts</strong>
+                  <p>Open Terminal inside the path, execute <code>npm install</code> followed by <code>npm start</code> to run the screensaver layout.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="web-footer">
+        <p>&copy; 2026 Katsu. All rights reserved.</p>
+      </footer>
+    </section>
+  </main>
+
+  <section id="saver" class="saver hidden" aria-label="Selected clock">
+    <canvas id="clockCanvas"></canvas>
+    <div id="saver-actions" class="saver-actions">
+      <button id="home-btn" type="button" aria-label="Back to Karumes">
+        <img src="home.png" alt="Home">
+      </button>
+      <button id="settings-btn" type="button" aria-label="Customize clock">
+        <img src="setting.png" alt="Settings">
+      </button>
+    </div>
+  </section>
+
+  <!-- 設定パネル -->
+  <aside id="settings-panel" class="settings-panel hidden" aria-label="Clock settings">
+    <div class="settings-head">
+      <span id="settings-title">Clock</span>
+      <button id="close-settings" type="button" aria-label="Close settings"></button>
+    </div>
+
+    <div class="settings-grid">
+      <div class="settings-color" data-setting="primary" data-color-target="font-custom-color">
+        <span>Main</span>
+        <div class="color-swatches" data-swatches="primary"></div>
+        <input id="font-custom-color" type="color" class="hidden-color-input" />
+      </div>
+      <div class="settings-color" data-setting="colon" data-color-target="colon-custom-color">
+        <span>Accent</span>
+        <div class="color-swatches" data-swatches="colon"></div>
+        <input id="colon-custom-color" type="color" class="hidden-color-input" />
+      </div>
+      <div class="settings-color" data-setting="card" data-color-target="card-custom-color">
+        <span>Surface</span>
+        <div class="color-swatches" data-swatches="card"></div>
+        <input id="card-custom-color" type="color" class="hidden-color-input" />
+      </div>
+    </div>
+
+    <div class="settings-row" data-setting="font">
+      <span>Font</span>
+      <div class="custom-select-wrapper">
+        <div id="custom-font-select" class="custom-select-trigger">Font 1</div>
+        <div id="custom-font-options" class="custom-select-options hidden">
+          <div class="custom-option" data-value="font1">Font 1</div>
+          <div class="custom-option" data-value="font2">Font 2</div>
+          <div class="custom-option" data-value="font3">Font 3</div>
+          <div class="custom-option" data-value="font4">Font 4</div>
+          <div class="custom-option" data-value="font5">Font 5</div>
+          <div class="custom-option" data-value="font6">Font 6</div>
+          <div class="custom-option" data-value="font7">Font 7</div>
+          <div class="custom-option" data-value="font8">Font 8</div>
+          <div class="custom-option" data-value="font9">Font 9</div>
+        </div>
+      </div>
+      <input type="hidden" id="font-family-select" value="font1" />
+    </div>
+
+    <div class="settings-row" data-setting="difficulty">
+      <span>Difficulty</span>
+      <div class="custom-select-wrapper">
+        <div id="custom-difficulty-select" class="custom-select-trigger">Easy</div>
+        <div id="custom-difficulty-options" class="custom-select-options hidden">
+          <div class="custom-difficulty-option" data-value="easy">Easy</div>
+          <div class="custom-difficulty-option" data-value="medium">Medium</div>
+          <div class="custom-difficulty-option" data-value="hard">Hard</div>
+          <div class="custom-difficulty-option" data-value="chaos">Chaos</div>
+        </div>
+      </div>
+      <input type="hidden" id="difficulty-select" value="easy" />
+    </div>
+
+    <div class="settings-row" data-setting="showWave">
+      <span>Show Wave</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="wave-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <!-- 12/24 Hour Format Control -->
+    <div class="settings-row" data-setting="hourFormat">
+      <span>Format</span>
+      <div class="custom-select-wrapper">
+        <div id="custom-format-select" class="custom-select-trigger">24-Hour</div>
+        <div id="custom-format-options" class="custom-select-options hidden">
+          <div class="custom-format-option" data-value="24">24-Hour</div>
+          <div class="custom-format-option" data-value="12">12-Hour</div>
+        </div>
+      </div>
+      <input type="hidden" id="format-select" value="24" />
+    </div>
+
+    <!-- AM/PM Toggle -->
+    <div class="settings-row" data-setting="showAmPm">
+      <span>Show AM/PM</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="ampm-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <!-- Date Toggle -->
+    <div class="settings-row" data-setting="showDate">
+      <span>Show Date</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="date-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <!-- Day of Week Toggle -->
+    <div class="settings-row" data-setting="showDay">
+      <span>Show Day</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="day-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-row" data-setting="showSeconds">
+      <span>Show Seconds</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="seconds-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-row" data-setting="showDigital">
+      <span>Show Digital</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="digital-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    
+    <div class="settings-row" data-setting="showMidline">
+      <span>Show Midline</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="midline-toggle" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="settings-row" data-setting="size">
+      <span>Clock size</span>
+      <input id="clock-size-scale" type="range" min="0.55" max="2.5" step="0.05" value="0.5" />
+    </div>
+
+  </aside>
+  
+  <script src="clocks/clock-definitions.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,1317 @@
+:root {
+  color-scheme: dark;
+  --glow-x: 50%;
+  --glow-y: 42%;
+  --black: #020617; /* Webサイト用の深みのあるディープネイビースレート */
+  --ink: #e0fcfd;   /* デフォルトを柔らかな氷シアン系ホワイトに設定 */
+  --muted: rgba(235, 244, 255, 0.68);/* 水色シアンをシステムカラーに指定 */
+  --glass: rgba(255, 255, 255, 0.02);
+  --glass-strong: rgba(255, 255, 255, 0.08);
+  --line: rgba(105, 247, 255, 0.1); 
+  --cyan: #69f7ff;
+  --pink: #ff4fd8;
+  --green: #89ffbf;
+  --win-color: #00a4ef;
+  --mac-color: #ffffff; 
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   ブラウザ全体のスクロール構造変更 (1280x720などの画面で絶対にスクロールバーを右端に配置)
+   ========================================================================== */
+html {
+  overflow-y: auto; /* 常にドキュメントの一番右端（メイン画面の端）にスクロールバーを配置 */
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: visible; /* 画面全体の制限を解除して標準スクロールバーが追従するように設定 */
+  background: var(--black);
+  color: var(--ink);
+  font-family: "SF Pro Display", "Inter", "Segoe UI", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+
+  /* 右クリックやドラッグ操作による意図しないテキスト選択・ハイライトを完全に抑止 */
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* 画像ファイルに対するデスクトップや外部への不要なドラッグ操作を抑止 */
+img {
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+}
+
+/* 有機的に揺らめく背景アニメーション */
+.mesh-background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mesh-glow-1 {
+  position: absolute;
+  top: -10%;
+  left: 20%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(105, 247, 255, 0.045) 0%, transparent 70%);
+  animation: floatGlow1 24s infinite alternate ease-in-out;
+}
+
+.mesh-glow-2 {
+  position: absolute;
+  bottom: -10%;
+  right: 15%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(105, 247, 255, 0.015) 0%, transparent 70%);
+  animation: floatGlow2 20s infinite alternate ease-in-out;
+}
+
+@keyframes floatGlow1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8%, 10%) scale(1.15); }
+}
+
+@keyframes floatGlow2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(-10%, -8%) scale(0.9); }
+}
+
+/* ==========================================================================
+   初期表示遅延を完全に排除する即時描画用スタイル（フェードインのラグを撤廃）
+   ========================================================================== */
+.animate-fade-in,
+.animate-fade-in-delayed {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important; /* ロード直後から100%完全な状態で表示 */
+}
+
+.platform-shell {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  overflow-y: visible; /* 画面右端の標準スクロールバーが動くようにスクロール制限を排除 */
+  padding: 40px clamp(24px, 6vw, 120px) 120px; 
+  background: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Webヒーローセクション設計 (余白とマージンの黄金比率に最適化)
+   ========================================================================== */
+.web-hero {
+  position: relative;
+  max-width: 800px; /* 幅を最適化して文章の折り返しを綺麗に整列 */
+  margin: 100px auto 64px auto; /* 上部の空間を広げ、下部の時計一覧との距離をスマートに維持 */
+  text-align: center;
+  z-index: 12;
+}
+
+.web-hero .badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(105, 247, 255, 0.04);
+  border: 1px solid rgba(105, 247, 255, 0.12);
+  color: var(--cyan);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 28px;
+}
+
+/* タイトルサイズとトラッキング（文字間）のバランス調整 */
+.web-hero h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem); 
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em; /* 文字間を上品に引き締め */
+  margin: 0 auto 20px auto;
+  background: linear-gradient(135deg, #e0fcfd 40%, #69f7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ヒーロー説明文の可読性最適化 */
+.web-hero .hero-desc {
+  font-size: clamp(1rem, 1.8vw, 1.125rem); /* テキストプロポーションの調整 */
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 640px; /* 1行あたりの文字数を視覚的に一番読みやすい長さに制限 */
+  margin: 0 auto 40px auto;
+}
+
+/* ダウンロードセクションの配置調整 */
+.web-downloads {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 上揃えにしてComing Soonバッジとの垂直軸を揃える */
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 0 auto 48px auto; /* 次の要素との余白を48pxに最適化 */
+}
+
+/* ダウンロードボタンのサイズ・パディング */
+.web-dl-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px; /* パディングをすこしスリムにし、シャープで洗練されたプロダクトボタンへ */
+  border-radius: 14px;
+  text-decoration: none;
+  background: linear-gradient(135deg, rgba(105, 247, 255, 0.04) 0%, rgba(105, 247, 255, 0.01) 100%);
+  border: 1px solid rgba(105, 247, 255, 0.12);
+  color: var(--ink);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, box-shadow 0.25s;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  text-align: left;
+  overflow: hidden;
+}
+
+.web-dl-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.web-dl-btn .dl-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.8;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.web-dl-btn .dl-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.web-dl-btn .dl-text small {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.web-dl-btn .dl-text strong {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.web-dl-btn.win:hover {
+  background: linear-gradient(135deg, rgba(0, 164, 239, 0.06) 0%, rgba(0, 164, 239, 0.02) 100%);
+  border-color: rgba(0, 164, 239, 0.6);
+  box-shadow: 0 0 35px rgba(0, 164, 239, 0.15);
+  transform: translateY(-3px);
+}
+
+.web-dl-btn.win:hover .dl-icon-img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* macOSボタンの非活性用レイアウトスタイル */
+.web-dl-btn.mac.disabled {
+  pointer-events: none !important;
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.web-dl-btn.mac.disabled:hover {
+  background: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.web-dl-btn.mac.disabled .dl-icon-img {
+  opacity: 0.4 !important;
+}
+
+/* macOSダウンロードエリアをまとめる縦整列ラッパー */
+.web-dl-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 中央に整列 */
+  gap: 8px; /* ボタンと下の Coming soon! との間の隙間 */
+}
+
+/* ボタンの外側に配置される「Coming soon!」の専用バッジデザイン */
+.coming-soon-label {
+  font-size: 0.75rem;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Explore Clocks コンテナ位置調整 */
+.hero-explore {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px; /* 心地よい連続性を保つ間隔 */
+}
+
+.view-clocks-trigger {
+  background: none;
+  border: none;
+  color: var(--cyan); 
+  font-size: 0.95rem;
+  font-weight: 400; 
+  letter-spacing: 0.05em;
+  padding: 8px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.25s ease;
+}
+
+.view-clocks-trigger .arrow {
+  display: inline-block;
+  font-size: 1.1rem;
+  animation: bounceArrow 1.6s infinite ease-in-out;
+}
+
+.view-clocks-trigger:hover {
+  opacity: 0.8;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* トップバー */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 20px;
+}
+
+.brand-mark {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default !important;
+  outline: none;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition: none !important;
+}
+
+.brand-mark img {
+  height: 100% !important;
+  width: auto !important;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+/* 時計グリッド & カード */
+.clock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 400px));
+  justify-content: center;
+  gap: clamp(16px, 2vw, 28px);
+  padding-bottom: 24px;
+}
+
+.clock-card {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: #000000;
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.34);
+  transition: transform 520ms cubic-bezier(.2,.8,.2,1), border-color 200ms ease, box-shadow 200ms ease;
+  opacity: 1;          
+  transform: translateY(0); 
+}
+
+.clock-card:hover {
+  transform: translateY(-6px) scale(1.018);
+  border-color: rgba(105, 247, 255, 0.62);
+  box-shadow: 0 22px 85px rgba(0, 0, 0, 0.44), 0 0 46px rgba(105, 247, 255, 0.22);
+}
+
+.clock-card.selected {
+  border-color: rgba(105, 247, 255, 0.95) !important;
+  transform: translateY(-4px) scale(1.015);
+  box-shadow:
+    0 22px 85px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(105, 247, 255, 0.4) inset,
+    0 0 32px rgba(105, 247, 255, 0.62),
+    0 0 76px rgba(105, 248, 255, 0.22);
+}
+
+.clock-card.selected::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  border-radius: 8px;
+  box-shadow: inset 0 0 34px rgba(105, 247, 255, 0.35);
+}
+
+.clock-card canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000000;
+}
+
+.card-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.16) 46%, transparent 62%);
+  transform: translateX(-120%);
+  transition: transform 600ms ease;
+}
+
+.clock-card:hover .card-shine {
+  transform: translateX(120%);
+}
+
+/* スクリーンセーバー & フルスクリーン表示 */
+.saver {
+  position: fixed;
+  inset: 0;
+  z-index: 30; 
+  background: #000000;
+  overflow: hidden;
+}
+
+#clockCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.saver-actions {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 32;
+  display: flex;
+  gap: 10px;
+  opacity: 1;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.saver-actions.hidden-controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.saver-actions button {
+  height: 42px;
+  min-width: 42px;
+  padding: 0 18px 2px 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+#home-btn,
+#settings-btn,
+#close-settings {
+  position: relative !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--line) !important;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease !important;
+}
+
+#close-settings::before,
+#close-settings::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  background-color: var(--ink);
+  border-radius: 999px;
+  transition: background-color 180ms ease;
+}
+
+#close-settings::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#close-settings::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+#home-btn img,
+#settings-btn img {
+  width: 20px !important;
+  height: 20px !important;
+  object-fit: contain;
+  pointer-events: none; 
+}
+
+#close-settings:hover,
+#settings-btn:hover {
+  transform: rotate(90deg) !important;
+}
+
+#home-btn:hover,
+#settings-btn:hover,
+#close-settings:hover {
+  border-color: rgba(105, 247, 255, 0.52) !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* ==========================================================================
+   設定パネル (画面比率・サイズを問わず確実に右端へぴったり配置する設計)
+   ========================================================================== */
+.settings-panel {
+  position: fixed !important;
+  top: 84px !important;
+  right: 28px !important; /* 画面右端、ブラウザスクロールバーの真左にピタッと寄せる */
+  left: auto !important;
+  bottom: auto !important;
+  z-index: 40;
+  width: 360px !important;              
+  height: auto !important;            
+  max-height: calc(100vh - 108px) !important; 
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(14, 18, 26, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+  
+  /* パネル自体の角丸や境界に影響を出さずに、リストのみを飛び出させるため overflow-y: auto を厳格に適用 */
+  overflow-y: auto !important; 
+  overflow-x: hidden !important;
+}
+
+/* ==========================================================================
+   ご指定いただいたスクロールバーおよび上下矢印デザイン (そのまま適用)
+   ========================================================================== */
+.settings-panel::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+.settings-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+.settings-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(105, 247, 255, 0.35);
+}
+
+/* スクロールバーの上下矢印用ボタン（高さを設けてつまみの最大可動域を上下方向に制限） */
+.settings-panel::-webkit-scrollbar-button:single-button {
+  background-color: transparent;
+  display: block;
+  height: 24px; /* つまみの一番上の位置を下げ、一番下の位置を上げるために高さを確保 */
+  width: 10px;
+}
+
+/* スクロールバー上矢印 (CSSグラデーションのみで自作した▲印。位置を少し下寄りに配置) */
+.settings-panel::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: 
+    linear-gradient(135deg, transparent 50%, var(--cyan) 50%),
+    linear-gradient(225deg, transparent 50%, var(--cyan) 50%);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+  background-position: calc(50% - 2px) 14px, calc(50% + 2px) 14px;
+}
+
+/* スクロールバー下矢印 (CSSグラデーションのみで自作した▼印。位置を少し上寄りに配置) */
+.settings-panel::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: 
+    linear-gradient(45deg, transparent 50%, var(--cyan) 50%),
+    linear-gradient(315deg, transparent 50%, var(--cyan) 50%);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+  background-position: calc(50% - 2px) 6px, calc(50% + 2px) 6px;
+}
+
+.settings-head,
+.settings-row,
+.settings-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.settings-head {
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+
+.settings-head span {
+  font-size: 1.05rem;
+  font-weight: 750;
+  color: #ffffff;
+}
+
+.settings-grid {
+  display: flex;
+  flex-direction: column; 
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.settings-color,
+.settings-row {
+  position: relative;
+  z-index: 1;
+  height: auto;            
+  min-height: 58px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.settings-color {
+  display: flex;
+  flex-direction: row;       
+  align-items: center;
+  justify-content: space-between; 
+  gap: 12px;
+  flex-wrap: nowrap;          
+}
+
+.settings-row {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;      
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: nowrap;          
+}
+
+.settings-color > span,
+.settings-row > span {
+  display: block;
+  margin-bottom: 0;
+  text-align: left;
+  font-weight: 600;
+  flex-shrink: 0;           
+}
+
+.clock-mode .saver-actions {
+  display: none;
+}
+
+.settings-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.settings-actions button,
+#launch-btn,
+.launch-btn,
+#submit-feedback-btn {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(105, 247, 255, 0.38) !important;
+  background: rgba(105, 247, 255, 0.12) !important;
+  color: var(--cyan) !important;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.settings-actions button:hover,
+#launch-btn:hover,
+.launch-btn:hover,
+#submit-feedback-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(105, 247, 255, 0.22) !important;
+  border-color: rgba(105, 247, 255, 0.62) !important;
+  box-shadow: 0 0 24px rgba(105, 247, 255, 0.28) !important;
+  color: #ffffff !important;
+}
+
+/* スウォッチ定義 */
+.color-swatches {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;       
+  align-items: center;
+  justify-content: flex-end; 
+  gap: 6px;
+  flex-shrink: 0;         
+}
+
+.settings-panel .color-swatch {
+  position: relative;
+  width: 28px;              
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  transition: transform 160ms cubic-bezier(.2,.8,.2,1);
+}
+
+.settings-panel .color-swatch::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background-color: var(--swatch, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.settings-panel .color-swatch:hover {
+  transform: scale(1.08);
+  background: transparent;
+}
+
+.settings-panel .color-swatch.active::before {
+  border-color: rgba(255, 255, 255, 0.9);
+  border-width: 2px;
+}
+
+.settings-panel .color-swatch.active::after {
+  content: "";
+  position: absolute;
+  inset: 6px; 
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.88);
+  pointer-events: none;
+}
+
+.settings-panel .color-swatch.custom {
+  background: transparent;
+}
+
+.settings-panel .color-swatch.custom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.settings-panel .color-swatch.custom::after,
+.settings-panel .color-swatch.custom.active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(255,255,255,0.92) calc(50% - 0.5px), rgba(255,255,255,0.92) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(0deg, transparent calc(50% - 0.5px), rgba(255,255,255,0.92) calc(50% - 0.5px), rgba(255,255,255,0.92) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+  background-repeat: no-repeat;
+  background-size: 100% 10px, 10px 100%;
+  background-position: center;
+  border: none;
+}
+
+.hidden-color-input {
+  position: absolute !important;
+  top: 120% !important;   
+  right: 0px !important; 
+  transform: translateY(-50%) !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* スライダー・セレクトボックス */
+.settings-panel input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 160px !important;    
+  min-width: 160px !important;
+  flex-shrink: 0;               
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
+.settings-panel input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--black);
+  cursor: pointer;
+}
+
+.settings-panel [data-setting].hidden-setting {
+  display: none;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  width: 150px !important;     
+  min-width: 150px !important;
+  flex-shrink: 0;             
+}
+
+.custom-select-trigger {
+  min-height: 38px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-select-trigger::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg);
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-select-trigger.active::after {
+  transform: rotate(225deg);
+}
+
+/* ポータル移行後の絶対/固定配置されるドロップダウン選択肢リストのデザイン定義 */
+.custom-select-options {
+  background: rgba(14, 18, 26, 0.98);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+.custom-option,
+.custom-difficulty-option,
+.custom-format-option {
+  padding: 10px 16px;
+  color: var(--ink);
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.custom-option:first-child,
+.custom-difficulty-option:first-child,
+.custom-format-option:first-child {
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.custom-option:last-child,
+.custom-difficulty-option:last-child,
+.custom-format-option:last-child {
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.custom-option:hover,
+.custom-difficulty-option:hover,
+.custom-format-option:hover {
+  background: rgba(105, 247, 255, 0.12);
+  color: var(--cyan);
+}
+
+/* Switches */
+.toggle-switch {
+  position: relative;
+  width: 42px;
+  height: 22px;
+}
+
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: rgba(105, 247, 255, 0.2);
+  border-color: var(--cyan);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+  background-color: var(--cyan);
+}
+.settings-row.disabled-row {
+  opacity: 0.45 !important;
+  pointer-events: none !important;
+}
+
+.toggle-switch.disabled-toggle .toggle-slider {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.toggle-switch.disabled-toggle .toggle-slider:before {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.hidden-setting { display: none !important; }
+.hidden { display: none !important; }
+
+/* Setup Guide Section */
+.setup-guide-section {
+  max-width: 860px;
+  margin: 100px auto 0 auto; 
+  z-index: 12;
+  position: relative;
+}
+
+.setup-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 24px;
+  transition: color 0.2s, border-color 0.2s;
+  min-width: 140px; 
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  color: var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.guide-box {
+  background: rgba(14, 18, 26, 0.4);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.guide-box h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.guide-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 18px;
+}
+
+.g-step {
+  display: flex;
+  gap: 24px;
+}
+
+.g-step .num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(105, 247, 255, 0.08);
+  border: 1px solid rgba(105, 247, 255, 0.3);
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.g-step strong {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+
+.g-step p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+code {
+  color: var(--pink);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.web-footer {
+  text-align: center;
+  padding: 48px 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  margin-top: 100px;
+}
+
+/* ==========================================================================
+   レスポンシブデザイン (TV、タブレット、スマホ、超小画面)
+   ========================================================================== */
+
+/* 1. 超大画面 (TV / 4K / ウルトラワイドモニターなど) */
+@media (min-width: 1920px) {
+  .platform-shell {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 60px 120px 140px;
+  }
+  .clock-grid {
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 40px;
+  }
+  .setup-guide-section {
+    max-width: 1100px;
+  }
+}
+
+/* 2. デスクトップ通常 (1200px - 1919px) */
+@media (max-width: 1400px) {
+  .clock-grid {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+/* 3. タブレット（横・縦）および小型PC (768px - 1199px) */
+@media (max-width: 1199px) {
+  .clock-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px;
+  }
+  .platform-shell {
+    padding: 30px 40px 100px;
+  }
+}
+
+/* 4. タブレット（縦）およびスマホ横 (481px - 767px) */
+@media (max-width: 767px) {
+  .platform-shell {
+    padding: 24px 20px 80px;
+  }
+  .topbar {
+    padding: 10px 0;
+  }
+  .clock-grid {
+    grid-template-columns: 1fr; 
+    max-width: 480px;
+    margin: 0 auto;
+    gap: 24px;
+  }
+  .setup-guide-section {
+    margin-top: 60px;
+  }
+  .guide-box {
+    padding: 24px;
+  }
+  
+  .settings-panel {
+    top: 84px !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: 16px !important;
+    width: 340px !important;
+    max-height: calc(100vh - 120px) !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* 5. スマートフォン (320px - 480px) */
+@media (max-width: 480px) {
+  .platform-shell {
+    padding: 16px 16px 60px;
+  }
+  .topbar {
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    padding: 8px 0 16px;
+  }
+  .brand-mark {
+    height: 38px;
+  }
+  .brand-mark img {
+    max-width: 120px;
+  }
+  .web-hero {
+    margin: 40px auto 60px auto;
+  }
+  .web-hero h1 {
+    font-size: 2rem;
+  }
+  .web-downloads {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .web-dl-btn {
+    justify-content: center;
+    padding: 14px 24px;
+  }
+  
+  .settings-panel {
+    top: 84px !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: 12px !important;
+    width: calc(100vw - 24px) !important;
+    max-width: 340px !important;
+    border-radius: 16px !important;
+    max-height: calc(100vh - 120px) !important;
+    padding: 18px !important;
+    border-bottom: 1px solid var(--line) !important;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  .settings-color, .settings-row {
+    padding: 10px 12px;
+    height: auto;
+    min-height: 52px;
+    border-radius: 12px;
+    flex-wrap: wrap; 
+  }
+  
+  .settings-color span, .settings-row span {
+    font-size: 0.9rem;
+  }
+  
+  .custom-select-wrapper, 
+  .settings-panel input[type="range"] {
+    width: 100% !important; 
+    min-width: 100% !important;
+    margin-top: 6px;
+  }
+  
+  .color-swatches {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+  
+  .settings-panel .color-swatch {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    min-height: 26px;
+  }
+}
+
+/* 6. 超小型スマートフォン (320px以下) */
+@media (max-width: 320px) {
+  .platform-shell {
+    padding: 12px 10px;
+  }
+  .web-hero h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* フォント定義ブロック */
+@font-face {
+  font-family: 'font-1';
+  src: url('./fonts/Quicksand-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-2';
+  src: url('./fonts/Segoe-UI-Bold.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-3';
+  src: url('./fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-4';
+  src: url('./fonts/Oswald-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-5';
+  src: url('./fonts/Scrapitup-EEK4.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-6';
+  src: url('./fonts/Kbsticktoit-vJ3M.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-7';
+  src: url('./fonts/GamjaFlower-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-8';
+  src: url('./fonts/CupcakePartyDemo-46xK.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-9';
+  src: url('./fonts/OblataDisplayRegular-Zp8o8.otf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
