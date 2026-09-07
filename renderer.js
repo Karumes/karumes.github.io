@@ -309,10 +309,6 @@ function renderClock(ctx, canvas, index, now) {
 
   ctx.save();
   ctx.translate(offsetX, offsetY);
-  
-  ctx.beginPath();
-  ctx.rect(0, 0, virtualW, virtualH);
-  ctx.clip();
 
   const sizeScale = Number(profile.sizeScale) || 1;
   const referenceDim = 820;
