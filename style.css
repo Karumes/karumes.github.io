@@ -272,15 +272,6 @@ button {
   gap: 8px; /* ボタンと下の Coming soon! との間の隙間 */
 }
 
-/* ボタンの外側に配置される「Coming soon!」の専用バッジデザイン */
-.coming-soon-label {
-  font-size: 0.75rem;
-  color: var(--ink);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 /* Explore Clocks コンテナ位置調整 */
 .hero-explore {
   display: flex;
