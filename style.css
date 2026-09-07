@@ -1091,7 +1091,7 @@ code {
 
 .instagram-link:hover {
   color: var(--cyan); /* ホバー時に水色に変更 */
-  transform: translateY(-2px);
+  transform: translateY(-0.5px);
 }
 
 .social-icon {
