@@ -31,3 +31,5 @@ out/
 *.ntvs*
 *.njsproj
 *.sln
+
+*.zip
