@@ -1098,9 +1098,9 @@ async function init() {
 init();
 
 // ==========================================================================
-// ボタンのクリック数をカウントして表示する（CounterAPIを使用）
+// ボタンのクリック数をカウントして表示する（CounterAPI 対策版）
 // ==========================================================================
-const counterNamespace = "karumes_clock_downloads_v1"; // あなたのサイト専用の識別名
+const counterNamespace = "karumes_clock_downloads_v2"; // 競合防止のため識別子を少し変更
 
 async function initDownloadCounters() {
   const winBtn = document.getElementById("win-download-btn");
@@ -1111,15 +1111,22 @@ async function initDownloadCounters() {
   // 1. 現在のクリック数を取得して画面に表示する関数
   async function fetchCounts() {
     try {
+      // キャッシュを防止するため、URLの末尾に毎回違うランダム値（タイムスタンプ）を付けます
+      const t = Date.now();
+
       // Windowsのカウント取得
-      const winRes = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/windows`);
+      const winRes = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/windows?t=${t}`, {
+        cache: "no-store" // キャッシュを強制的に無効化
+      });
       if (winRes.ok) {
         const data = await winRes.json();
         if (winCountEl) winCountEl.textContent = `${data.count} downloads`;
       }
 
       // macOSのカウント取得
-      const macRes = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/macos`);
+      const macRes = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/macos?t=${t}`, {
+        cache: "no-store"
+      });
       if (macRes.ok) {
         const data = await macRes.json();
         if (macCountEl) macCountEl.textContent = `${data.count} downloads`;
@@ -1132,7 +1139,14 @@ async function initDownloadCounters() {
   // 2. クリックされた時にカウントを+1して画面を更新する関数
   async function incrementCount(platform) {
     try {
-      const res = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/${platform}/up`);
+      const t = Date.now();
+      // keepalive: true を指定して、ダウンロード開始後も通信をキャンセルさせずに完遂させます
+      const res = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/${platform}/up?t=${t}`, {
+        method: "GET",
+        cache: "no-store",
+        keepalive: true 
+      });
+      
       if (res.ok) {
         const data = await res.json();
         if (platform === "windows" && winCountEl) {
@@ -1148,10 +1162,16 @@ async function initDownloadCounters() {
 
   // ボタンがクリックされた時のイベントを設定
   if (winBtn) {
-    winBtn.addEventListener("click", () => incrementCount("windows"));
+    winBtn.addEventListener("click", () => {
+      // カウント加算処理を実行
+      incrementCount("windows");
+    });
   }
   if (macBtn) {
-    macBtn.addEventListener("click", () => incrementCount("macos"));
+    macBtn.addEventListener("click", () => {
+      // カウント加算処理を実行
+      incrementCount("macos");
+    });
   }
 
   // ページ読み込み時に現在のカウントを表示

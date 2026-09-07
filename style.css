@@ -255,23 +255,6 @@ button {
   opacity: 1;
 }
 
-/* macOSボタンの非活性用レイアウトスタイル */
-.web-dl-btn.mac.disabled {
-  pointer-events: none !important;
-  opacity: 0.45 !important;
-  cursor: not-allowed !important;
-  border-color: rgba(255, 255, 255, 0.05) !important;
-}
-
-.web-dl-btn.mac.disabled:hover {
-  background: none !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
-
-.web-dl-btn.mac.disabled .dl-icon-img {
-  opacity: 0.4 !important;
-}
 
 /* macOSダウンロードエリアをまとめる縦整列ラッパー */
 .web-dl-wrapper {
@@ -1124,12 +1107,6 @@ code {
   width: 25px;
   height: 25px;
   object-fit: contain;
-  opacity: 0.75;
-  transition: opacity 0.25s ease;
-}
-
-.instagram-link:hover .social-icon {
-  opacity: 1;
 }
 
 /* ==========================================================================
