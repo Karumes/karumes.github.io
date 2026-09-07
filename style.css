@@ -1065,13 +1065,76 @@ code {
   font-family: monospace;
 }
 
+
+/* ==========================================================================
+   フッターエリア全体の調整（レスポンシブ対応）
+   ========================================================================== */
 .web-footer {
-  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* スマホなどの狭い画面では縦並びにして中央揃え */
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
   padding: 48px 0;
-  font-size: 0.85rem;
-  color: var(--muted);
   border-top: 1px solid var(--line);
   margin-top: 100px;
+}
+
+/* スマホ時も含め、コピーライトの余白と文字サイズを統一 */
+.web-footer p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.footer-socials {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* ユーザー様にてご調整いただいたインスタグラムのスタイル（フォントサイズ1rem、アイコン25px） */
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.instagram-link:hover {
+  color: var(--cyan); /* ホバー時に水色に変更 */
+  transform: translateY(-2px);
+}
+
+.social-icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
+}
+
+.instagram-link:hover .social-icon {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   PC・タブレット環境（横幅768px以上）でのレイアウト
+   ========================================================================== */
+@media (min-width: 768px) {
+  .web-footer {
+    flex-direction: row; /* 横並びに変更 */
+  }
+
+  .web-footer p {
+    position: absolute;
+    right: 0; /* コピーライトのみを左端にピタッと寄せる */
+  }
 }
 
 /* ==========================================================================
