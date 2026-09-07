@@ -1096,3 +1096,67 @@ async function init() {
 }
 
 init();
+
+// ==========================================================================
+// ボタンのクリック数をカウントして表示する（CounterAPIを使用）
+// ==========================================================================
+const counterNamespace = "karumes_clock_downloads_v1"; // あなたのサイト専用の識別名
+
+async function initDownloadCounters() {
+  const winBtn = document.getElementById("win-download-btn");
+  const macBtn = document.getElementById("mac-download-btn");
+  const winCountEl = document.getElementById("win-dl-count");
+  const macCountEl = document.getElementById("mac-dl-count");
+
+  // 1. 現在のクリック数を取得して画面に表示する関数
+  async function fetchCounts() {
+    try {
+      // Windowsのカウント取得
+      const winRes = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/windows`);
+      if (winRes.ok) {
+        const data = await winRes.json();
+        if (winCountEl) winCountEl.textContent = `${data.count} downloads`;
+      }
+
+      // macOSのカウント取得
+      const macRes = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/macos`);
+      if (macRes.ok) {
+        const data = await macRes.json();
+        if (macCountEl) macCountEl.textContent = `${data.count} downloads`;
+      }
+    } catch (err) {
+      console.warn("Failed to fetch download counts:", err);
+    }
+  }
+
+  // 2. クリックされた時にカウントを+1して画面を更新する関数
+  async function incrementCount(platform) {
+    try {
+      const res = await fetch(`https://api.counterapi.dev/v1/${counterNamespace}/${platform}/up`);
+      if (res.ok) {
+        const data = await res.json();
+        if (platform === "windows" && winCountEl) {
+          winCountEl.textContent = `${data.count} downloads`;
+        } else if (platform === "macos" && macCountEl) {
+          macCountEl.textContent = `${data.count} downloads`;
+        }
+      }
+    } catch (err) {
+      console.warn("Failed to increment count:", err);
+    }
+  }
+
+  // ボタンがクリックされた時のイベントを設定
+  if (winBtn) {
+    winBtn.addEventListener("click", () => incrementCount("windows"));
+  }
+  if (macBtn) {
+    macBtn.addEventListener("click", () => incrementCount("macos"));
+  }
+
+  // ページ読み込み時に現在のカウントを表示
+  fetchCounts();
+}
+
+// 実行
+initDownloadCounters();

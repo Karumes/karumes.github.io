@@ -46,22 +46,28 @@
           A customizable clock designed to fit your space, your mood, and your style. Choose the look you love, make it your own, and turn your everyday screen into something worth looking at.
         </p>
         <div class="web-downloads">
-          <a href="Karumes Clock Download link (Windows).zip" class="web-dl-btn win" download>
-            <img src="windows.png" alt="Windows" class="dl-icon-img" />
-            <span class="dl-text">
-              <small>Download for</small>
-              <strong>Windows</strong>
-            </span>
-          </a>
-          <!-- macOSボタンを囲むラッパーとComing Soon!用テキストの配置 -->
+          <!-- Windows用ボタンとカウント数 -->
           <div class="web-dl-wrapper">
-          <a href="Karumes Clock Download link (MacOS).zip" class="web-dl-btn win" download>
+            <a href="Karumes Clock Download link (Windows).zip" class="web-dl-btn win" download id="win-download-btn">
+              <img src="windows.png" alt="Windows" class="dl-icon-img" />
+              <span class="dl-text">
+                <small>Download for</small>
+                <strong>Windows</strong>
+              </span>              
+            </a> 
+            <span id="win-dl-count" class="dl-count-text">0 downloads</span>
+          </div>
+
+          <!-- macOS用ボタンとカウント数 -->
+          <div class="web-dl-wrapper">
+            <a href="Karumes Clock Download link (MacOS).zip" class="web-dl-btn win" download id="mac-download-btn">
               <img src="mac.png" alt="macOS" class="dl-icon-img" />
               <span class="dl-text">
                 <small>Download for</small>
                 <strong>macOS</strong>
               </span>
             </a>
+            <span id="mac-dl-count" class="dl-count-text">0 downloads</span>
           </div>
         </div>
         
